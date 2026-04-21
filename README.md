@@ -119,37 +119,19 @@ Alternatively, import directly: **Share → Import → Upload File**
 
 ### From the command line (Node.js)
 
-Requires Node.js 16+ and npm.
+Requires Node.js 16+. Uses the [simulation](https://github.com/scottfr/simulation) package which loads Insight Maker models natively.
 
 ```bash
-# Install dependencies
 npm install
-
-# List available scenarios
-npm run list
-# or
-node scripts/run_scenario.mjs --list
-
-# Run a scenario
-npm run p2
-# or
-node scripts/run_scenario.mjs --scenario P2
-
-# Run with variable overrides
-node scripts/run_scenario.mjs --scenario P2 --severity 0.7 --self_efficacy 0.9
-
-# Output as CSV
-node scripts/run_scenario.mjs --scenario P3 --format csv
-
-# Save output to file
-node scripts/run_scenario.mjs --scenario P2 --format csv --output results_p2.csv
-
-# Model repeated exposure (30-unit interval)
-node scripts/run_scenario.mjs --scenario P2 --repeated_exposure 1 --exposure_interval 30
-
-# Model an anxious individual (P12)
-node scripts/run_scenario.mjs --scenario P5 --initial_fear 0.8 --initial_optimism 0.1
+npm run list        # list available scenarios
+npm run p2          # run proposition 2
+npm run p3          # run proposition 3
 ```
+
+For variable overrides, CSV output, repeated exposure, and individual difference modeling see the full CLI usage in `scripts/run_scenario.mjs` or run:
+
+```bash
+node scripts/run_scenario.mjs --help
 
 ### In R (via sdbuildR)
 

@@ -13,6 +13,16 @@
  * 
  * Requirements:
  *   npm install simulation
+ * This reads two files from disk — the model JSON and the scenarios JSON. 
+ * It looks at the command line arguments you typed to figure out which scenario 
+ * you want to run and whether you want to override any variables. 
+ * It loads the model into the simulation package. 
+ * It finds each variable in the model by name and sets it to the value from 
+ * your chosen scenario, or from your command line override if you provided one. 
+ * It runs the simulation. It pulls out the eight stocks
+ *  — Threat, Efficacy, fear, optimism, Adaptive, Maladaptive, rewards, consequences — 
+ * and either prints them as JSON or CSV depending on what you asked for. 
+ * It also calculates a small summary table showing the key values at the midpoint and end of the run.
  */
 
 import { readFileSync, writeFileSync } from 'fs';

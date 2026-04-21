@@ -147,8 +147,6 @@ plot(sim)
 
 ### In Python
 
-### From the command line (Python)
-
 Requires Python 3.8+. Independent implementation using numpy/scipy — no external SD package required. Results should be qualitatively identical to the Insight Maker version and serve as a cross-validation of the model.
 
 ```bash

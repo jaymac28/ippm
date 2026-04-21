@@ -145,6 +145,24 @@ sim <- simulate(sfm)
 plot(sim)
 ```
 
+### In Python
+
+### From the command line (Python)
+
+Requires Python 3.8+. Independent implementation using numpy/scipy — no external SD package required. Results should be qualitatively identical to the Insight Maker version and serve as a cross-validation of the model.
+
+```bash
+pip install -r requirements.txt
+
+python scripts/run_scenario.py --list
+python scripts/run_scenario.py --scenario P2
+python scripts/run_scenario.py --scenario P3 --format csv --output p3.csv
+python scripts/run_scenario.py --scenario P2 --severity 0.7 --self_efficacy 0.9
+python scripts/run_scenario.py --scenario P5 --initial_fear 0.8
+python scripts/run_scenario.py --scenario P2 --repeated_exposure 1 --exposure_interval 30
+python scripts/run_scenario.py --scenario P2 --plot
+```
+
 ## Proposition Scenarios
 
 | Scenario | Description | Key Variables |

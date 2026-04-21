@@ -206,7 +206,7 @@ This model draws on:
 
 If you use this model in research, please cite:
 
-> [Author]. (2025). *The Integrated Parallel Processing Model (IPPM): A systems dynamics respecification of the Extended Parallel Process Model* (Version 0.0.2). GitHub. https://github.com/[username]/ippm
+> McLachlan, Justin. (2025). *The Integrated Parallel Processing Model (IPPM): A systems dynamics respecification of the Extended Parallel Process Model* (Version 0.0.2). GitHub. https://github.com/jaymac28/ippm
 
 ## License
 

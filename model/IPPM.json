@@ -1,0 +1,713 @@
+{
+	"engine": "SIMULATION_PACKAGE",
+	"name": "The Integrated Parallel Processing Model 0.0.2",
+	"simulation": {
+		"algorithm": "RK4",
+		"time_start": 0,
+		"time_length": 600,
+		"time_step": 1,
+		"time_units": "DAYS"
+	},
+	"elements": [
+		{
+			"type": "STOCK",
+			"name": "Threat",
+			"display": {
+				"coordinates": [
+					620,
+					340
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "Efficacy",
+			"display": {
+				"coordinates": [
+					830,
+					341
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "Threat Appraisal",
+			"from": null,
+			"to": "Threat",
+			"display": {
+				"from_coordinates": [
+					670,
+					110
+				]
+			},
+			"behavior": {
+				"value": "severity <- RandNormal([severity],[population_variance])\nsusceptibility <- RandNormal([susceptibility],[population_variance])\nbase <- severity + susceptibility\ndampening <- IfThenElse([cross_dampening] = 1, ([optimism] + [rewards]) * 0.1, 0)\nIfThenElse(Days() < 1, base - dampening, 0)",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "Efficacy Appraisal",
+			"from": null,
+			"to": "Efficacy",
+			"display": {
+				"from_coordinates": [
+					880,
+					111
+				]
+			},
+			"behavior": {
+				"value": "self_efficacy <- RandNormal([self_efficacy],[population_variance])\nresponse_efficacy <- RandNormal([response_efficacy],[population_variance])\nbase <- self_efficacy + response_efficacy\ndampening <- IfThenElse([cross_dampening] = 1, ([fear] + [consequences]) * 0.1, 0)\nIfThenElse(Days() < 1, base - dampening, 0)",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "fear",
+			"display": {
+				"coordinates": [
+					390,
+					340
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 0.5,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "optimism",
+			"display": {
+				"coordinates": [
+					1050,
+					340
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "fear feedback",
+			"from": "fear",
+			"to": "Threat",
+			"behavior": {
+				"value": "[fear] * 0.1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "fear dissipation",
+			"from": "fear",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					190,
+					360
+				]
+			},
+			"behavior": {
+				"value": ".01",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "optimism dissipation",
+			"from": "optimism",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					1350,
+					360
+				]
+			},
+			"behavior": {
+				"value": ".01",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "Adaptive",
+			"display": {
+				"coordinates": [
+					920,
+					661
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "Maladaptive",
+			"display": {
+				"coordinates": [
+					500,
+					660
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "danger control",
+			"from": "Efficacy",
+			"to": "Adaptive",
+			"behavior": {
+				"value": "IfThenElse([Efficacy] >= [Threat], [Efficacy] + ([consequences] * 0.1), 0)",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "fear control",
+			"from": "Threat",
+			"to": "Maladaptive",
+			"behavior": {
+				"value": "IfThenElse([Efficacy] >= [Threat], 0, [Threat] + ([rewards] * 0.1))",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "VARIABLE",
+			"name": "severity",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0,
+				"interactive_max": 1,
+				"coordinates": [
+					500,
+					30
+				],
+				"size": [
+					120,
+					50
+				]
+			},
+			"behavior": {
+				"value": 0.8
+			}
+		},
+		{
+			"type": "VARIABLE",
+			"name": "susceptibility",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0,
+				"interactive_max": 1,
+				"coordinates": [
+					460,
+					110
+				],
+				"size": [
+					120,
+					50
+				]
+			},
+			"behavior": {
+				"value": 0.8
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "severity",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "susceptibility",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "VARIABLE",
+			"name": "self_efficacy",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0,
+				"interactive_max": 1,
+				"coordinates": [
+					920,
+					40
+				],
+				"size": [
+					120,
+					50
+				]
+			},
+			"behavior": {
+				"value": 0.1
+			}
+		},
+		{
+			"type": "VARIABLE",
+			"name": "response_efficacy",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0,
+				"interactive_max": 1,
+				"coordinates": [
+					990,
+					111
+				],
+				"size": [
+					130,
+					50
+				]
+			},
+			"behavior": {
+				"value": 0.1
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "self_efficacy",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "response_efficacy",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "STOCK",
+			"name": "rewards",
+			"display": {
+				"coordinates": [
+					920,
+					791
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "fear reinforcement",
+			"from": "consequences",
+			"to": "fear",
+			"behavior": {
+				"value": "[consequences]*.1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "reward dissipation",
+			"from": "rewards",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					970,
+					961
+				]
+			},
+			"behavior": {
+				"value": "RandNormal(0.01, 0.005)",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "STOCK",
+			"name": "consequences",
+			"display": {
+				"coordinates": [
+					500,
+					790
+				],
+				"size": [
+					100,
+					40
+				]
+			},
+			"behavior": {
+				"initial_value": 1,
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "consequence dissipation",
+			"from": "consequences",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					550,
+					960
+				]
+			},
+			"behavior": {
+				"value": "RandNormal(0.01, 0.005)",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "+ emotional response",
+			"from": null,
+			"to": "optimism",
+			"display": {
+				"from_coordinates": [
+					1130,
+					251
+				]
+			},
+			"behavior": {
+				"value": "[Efficacy]*.1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "Efficacy",
+			"to": "+ emotional response"
+		},
+		{
+			"type": "FLOW",
+			"name": "optimism feedback",
+			"from": "optimism",
+			"to": "Efficacy",
+			"behavior": {
+				"value": "[optimism] * .1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "- emotional response",
+			"from": null,
+			"to": "fear",
+			"display": {
+				"from_coordinates": [
+					440,
+					250
+				]
+			},
+			"behavior": {
+				"value": "[Threat]*.1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "Threat",
+			"to": "- emotional response"
+		},
+		{
+			"type": "FLOW",
+			"name": "reward pathway",
+			"from": "Adaptive",
+			"to": "rewards",
+			"behavior": {
+				"value": "[Adaptive] - (([self_efficacy]+[response_efficacy])*Rand())",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "pain pathway",
+			"from": "Maladaptive",
+			"to": "consequences",
+			"behavior": {
+				"value": "[Maladaptive] - (([severity]+[susceptibility])*Rand())",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "Maladaptive",
+			"to": "pain pathway"
+		},
+		{
+			"type": "FLOW",
+			"name": "optimism reinforcement",
+			"from": "rewards",
+			"to": "optimism",
+			"behavior": {
+				"value": "[rewards]*.1",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "susceptibility",
+			"to": "pain pathway"
+		},
+		{
+			"type": "LINK",
+			"from": "severity",
+			"to": "pain pathway"
+		},
+		{
+			"type": "LINK",
+			"from": "self_efficacy",
+			"to": "reward pathway"
+		},
+		{
+			"type": "LINK",
+			"from": "response_efficacy",
+			"to": "reward pathway"
+		},
+		{
+			"type": "LINK",
+			"from": "consequences",
+			"to": "danger control"
+		},
+		{
+			"type": "LINK",
+			"from": "rewards",
+			"to": "fear control"
+		},
+		{
+			"type": "VARIABLE",
+			"name": "population_variance",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0.01,
+				"interactive_max": 0.5,
+				"coordinates": [
+					690,
+					20
+				],
+				"size": [
+					150,
+					50
+				]
+			},
+			"behavior": {
+				"value": ".1"
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "population_variance",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "population_variance",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "VARIABLE",
+			"name": "cross_dampening",
+			"display": {
+				"interactive": true,
+				"interactive_min": 0,
+				"interactive_max": 1,
+				"coordinates": [
+					90,
+					80
+				],
+				"size": [
+					150,
+					80
+				]
+			},
+			"behavior": {
+				"value": 0
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "cross_dampening",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "cross_dampening",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "optimism",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "rewards",
+			"to": "Threat Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "consequences",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "LINK",
+			"from": "fear",
+			"to": "Efficacy Appraisal"
+		},
+		{
+			"type": "FLOW",
+			"name": "threat dissipation",
+			"from": "Threat",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					760,
+					270
+				]
+			},
+			"behavior": {
+				"value": "[Threat] * 0.05",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "FLOW",
+			"name": "efficacy dissipation",
+			"from": "Efficacy",
+			"to": null,
+			"display": {
+				"to_coordinates": [
+					800,
+					230
+				]
+			},
+			"behavior": {
+				"value": "[Efficacy] * 0.05",
+				"non_negative": true
+			}
+		},
+		{
+			"type": "LINK",
+			"from": "Efficacy",
+			"to": "fear control"
+		},
+		{
+			"type": "LINK",
+			"from": "Threat",
+			"to": "danger control"
+		},
+		{
+			"type": "LINK",
+			"from": "response_efficacy",
+			"to": "fear control"
+		}
+	],
+	"visualizations": [
+		{
+			"name": "Fear vs Optimism",
+			"type": "TIME_SERIES",
+			"elements": [
+				"fear",
+				"optimism"
+			]
+		},
+		{
+			"name": "Rewards",
+			"type": "TIME_SERIES",
+			"elements": [
+				"rewards",
+				"consequences"
+			]
+		},
+		{
+			"name": "Efficacy & Threat",
+			"type": "TIME_SERIES",
+			"elements": [
+				"Efficacy",
+				"Threat"
+			]
+		},
+		{
+			"name": "Adaptive vs Maladaptive Behavior",
+			"type": "TIME_SERIES",
+			"elements": [
+				"Adaptive",
+				"Maladaptive"
+			]
+		},
+		{
+			"name": "Default Display",
+			"type": "TIME_SERIES",
+			"elements": [
+				"Threat",
+				"Efficacy",
+				"fear",
+				"optimism",
+				"Adaptive",
+				"Maladaptive",
+				"rewards",
+				"consequences",
+				"population_variance",
+				"cross_dampening"
+			]
+		},
+		{
+			"name": "Fear / Optimism",
+			"type": "TABLE",
+			"elements": [
+				"fear",
+				"optimism"
+			]
+		},
+		{
+			"name": "Adaptive vs. Maladaptive",
+			"type": "TABLE",
+			"elements": [
+				"Adaptive",
+				"Maladaptive"
+			]
+		},
+		{
+			"name": "inputs",
+			"type": "TABLE",
+			"elements": [
+				"severity",
+				"susceptibility",
+				"self_efficacy",
+				"response_efficacy"
+			]
+		}
+	]
+}

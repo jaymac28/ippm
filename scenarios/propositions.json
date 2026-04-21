@@ -1,0 +1,235 @@
+{
+  "description": "Scenario definitions for testing Witte's (1992) EPPM propositions using the Integrated Parallel Processing Model. All scenarios use population_variance=0.1 and cross_dampening=0 unless noted. repeated_exposure=0 for single message exposure scenarios.",
+  "scenarios": [
+    {
+      "id": "P1",
+      "name": "P1 — Minimal Threat, No Efficacy: Default Fear Control",
+      "description": "Models a message so low in threat that efficacy content is never evaluated. Even minimal threat with zero efficacy produces weak fear control by default due to ambient baseline anxiety. Challenges Witte's categorical no-response prediction — the dynamic model shows a continuous response even at minimal activation levels.",
+      "variables": {
+        "severity": 0.05,
+        "susceptibility": 0.05,
+        "self_efficacy": 0,
+        "response_efficacy": 0,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Near-zero behavioral response on both pathways. Maladaptive marginally exceeds Adaptive due to zero efficacy content. Challenges Witte P1 categorical no-response claim."
+    },
+    {
+      "id": "P2",
+      "name": "P2 — High Efficacy Exceeds Threat: Danger Control",
+      "description": "Models the ideal fear appeal — sufficient threat to motivate but efficacy clearly exceeding threat to channel response into adaptive behavior. Efficacy inputs exceed threat inputs by 0.2 units, the empirically derived threshold for consistent danger control in this model.",
+      "variables": {
+        "severity": 0.6,
+        "susceptibility": 0.6,
+        "self_efficacy": 0.8,
+        "response_efficacy": 0.8,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Adaptive clearly dominates Maladaptive throughout active window. Hope loop engages, optimism builds. Maladaptive suppressed. Note: matched inputs (both at 0.8) produce indeterminate mixed results — efficacy must exceed threat by ~0.2 for consistent danger control."
+    },
+    {
+      "id": "P3",
+      "name": "P3 — High Threat, Low Efficacy: Fear Control",
+      "description": "Models the classic fear appeal failure. High threat with no credible path to addressing it. Audience manages anxiety through denial, avoidance, or reactance rather than protective action.",
+      "variables": {
+        "severity": 0.8,
+        "susceptibility": 0.8,
+        "self_efficacy": 0.1,
+        "response_efficacy": 0.1,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Maladaptive clearly dominates. Fear reinforcing loop active. Adaptive near zero. Optimism stays near floor. Fear control pathway dominant throughout."
+    },
+    {
+      "id": "P4",
+      "name": "P4 — Extreme Threat, Minimal Efficacy: Boomerang Effect",
+      "description": "P3 taken to its extreme. Near-maximum threat with near-zero efficacy. Produces the most entrenched fear control across all scenarios — the dynamic model equivalent of a boomerang effect.",
+      "variables": {
+        "severity": 0.9,
+        "susceptibility": 0.9,
+        "self_efficacy": 0.05,
+        "response_efficacy": 0.05,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Maximum Maladaptive accumulation across all scenarios. Most aggressive fear spiral. Consequences accumulate and feed back into fear. Optimism completely suppressed. Deepest fear-locked state."
+    },
+    {
+      "id": "P5",
+      "name": "P5 — High Threat, Moderate Efficacy: Unstable Mixed Response",
+      "description": "The most theoretically interesting scenario. Threat clearly exceeds efficacy but not overwhelmingly. Both pathways partially active. Long-run outcome sensitive to stochastic variation and initial conditions. Represents the zone where most real-world health communication actually operates.",
+      "variables": {
+        "severity": 0.8,
+        "susceptibility": 0.8,
+        "self_efficacy": 0.5,
+        "response_efficacy": 0.5,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Both Adaptive and Maladaptive active initially. Maladaptive dominant due to threat exceeding efficacy. Outcome sensitive to population_variance. Enable cross_dampening to observe interference effects."
+    },
+    {
+      "id": "P6",
+      "name": "P6 — Fear Drives Fear Control, Not Danger Control: Structural Verification",
+      "description": "Tests the causal pathway structure rather than the outcome. Fear should correlate with Maladaptive trajectory and show near-zero correlation with Adaptive. Uses same inputs as P3.",
+      "variables": {
+        "severity": 0.8,
+        "susceptibility": 0.8,
+        "self_efficacy": 0.1,
+        "response_efficacy": 0.1,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Fear stock tracks Maladaptive trajectory. Fear shows near-zero correlation with Adaptive. Compare fear vs Adaptive chart to confirm decoupling. Run alongside P7 to show bilateral structural symmetry."
+    },
+    {
+      "id": "P7",
+      "name": "P7 — Efficacy Cognitions Drive Danger Control, Not Fear: Structural Verification",
+      "description": "Mirror of P6. Tests that Adaptive tracks Efficacy stock, not fear stock. Uses same inputs as P2.",
+      "variables": {
+        "severity": 0.6,
+        "susceptibility": 0.6,
+        "self_efficacy": 0.8,
+        "response_efficacy": 0.8,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Adaptive tracks Efficacy stock. Near-zero correlation between fear and Adaptive. Confirms bilateral symmetry with P6 — fear pathway and efficacy pathway are structurally independent."
+    },
+    {
+      "id": "P8",
+      "name": "P8 — Threat and Fear Reciprocal Reinforcement: The Fear Spiral",
+      "description": "Isolates and observes the reinforcing feedback loop between Threat and fear. Moderate threat with low efficacy so the spiral can be watched building from a middle starting point. Both stocks should co-escalate in tandem.",
+      "variables": {
+        "severity": 0.5,
+        "susceptibility": 0.5,
+        "self_efficacy": 0.1,
+        "response_efficacy": 0.1,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Threat and fear co-escalate together in tandem — not one leading the other. Characteristic reinforcing loop signature: both rising with increasing momentum. Compare Threat and fear on same axis."
+    },
+    {
+      "id": "P9",
+      "name": "P9 — Maximum Threat, Maximum Efficacy: Strongest Danger Control",
+      "description": "Upper bound of message effectiveness. Both threat and efficacy at near-maximum. Should produce highest Adaptive accumulation across all scenarios. Hope loop most active here.",
+      "variables": {
+        "severity": 0.9,
+        "susceptibility": 0.9,
+        "self_efficacy": 0.9,
+        "response_efficacy": 0.9,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Highest Adaptive accumulation across all scenarios. Hope loop maximally active. Fear rises with high threat but outpaced by efficacy/optimism dynamics. Compare directly with P4 — identical threat, opposite outcome."
+    },
+    {
+      "id": "P10",
+      "name": "P10 — Maximum Threat, Minimum Efficacy: Strongest Fear Control",
+      "description": "Mirror of P9. Maximum threat with minimal efficacy. Worst-case fear appeal outcome. Hope loop starved. Should produce highest Maladaptive accumulation — the dynamic model equivalent of learned helplessness.",
+      "variables": {
+        "severity": 0.9,
+        "susceptibility": 0.9,
+        "self_efficacy": 0.1,
+        "response_efficacy": 0.1,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_fear": 0,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "expected": "Maximum Maladaptive accumulation. Deepest fear spiral. Hope loop completely starved. Run alongside P9 for most powerful demonstration of efficacy as the load-bearing variable."
+    },
+    {
+      "id": "P11",
+      "name": "P11 — Efficacy Determines Nature, Threat Determines Intensity: Comparative",
+      "description": "Demonstrated by comparing existing scenarios rather than a new scenario. Compare P2 vs P3 to show efficacy determines direction (same threat, efficacy flipped, outcome reverses). Compare P2 vs P5 to show threat determines intensity (same efficacy, reduced threat, same direction but lower accumulation).",
+      "variables": null,
+      "compare": ["P2", "P3", "P5"],
+      "expected": "P2 vs P3: Adaptive/Maladaptive split reverses when efficacy flips, threat held constant. P2 vs P5: Both produce danger control but P2 shows higher absolute accumulation. Together demonstrate efficacy as steering wheel, threat as accelerator."
+    },
+    {
+      "id": "P12",
+      "name": "P12 — Individual Differences Mediated by Threat and Efficacy",
+      "description": "Demonstrated by running P5 (unstable mixed scenario, most sensitive to initial conditions) with varied initial_fear values. Same message inputs, different starting emotional states, different outcomes.",
+      "variables": {
+        "severity": 0.8,
+        "susceptibility": 0.8,
+        "self_efficacy": 0.5,
+        "response_efficacy": 0.5,
+        "population_variance": 0.1,
+        "cross_dampening": 0,
+        "repeated_exposure": 0,
+        "exposure_interval": 30,
+        "initial_optimism": 0,
+        "initial_threat": 0,
+        "initial_efficacy": 0
+      },
+      "vary": {
+        "initial_fear": [0.2, 0.5, 0.8]
+      },
+      "expected": "Higher initial_fear produces faster fear control dominance even with identical message inputs. Demonstrates that individual baseline emotional state mediates message response. Same message, different person, different outcome."
+    }
+  ]
+}

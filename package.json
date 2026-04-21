@@ -1,0 +1,37 @@
+{
+  "name": "ippm",
+  "version": "0.0.2",
+  "description": "The Integrated Parallel Processing Model — a systems dynamics respecification and completion of Witte's (1992) Extended Parallel Process Model.",
+  "type": "module",
+  "scripts": {
+    "list": "node scripts/run_scenario.mjs --list",
+    "p1": "node scripts/run_scenario.mjs --scenario P1",
+    "p2": "node scripts/run_scenario.mjs --scenario P2",
+    "p3": "node scripts/run_scenario.mjs --scenario P3",
+    "p4": "node scripts/run_scenario.mjs --scenario P4",
+    "p5": "node scripts/run_scenario.mjs --scenario P5",
+    "p6": "node scripts/run_scenario.mjs --scenario P6",
+    "p7": "node scripts/run_scenario.mjs --scenario P7",
+    "p8": "node scripts/run_scenario.mjs --scenario P8",
+    "p9": "node scripts/run_scenario.mjs --scenario P9",
+    "p10": "node scripts/run_scenario.mjs --scenario P10",
+    "p11": "node scripts/run_scenario.mjs --scenario P11",
+    "p12": "node scripts/run_scenario.mjs --scenario P12"
+  },
+  "dependencies": {
+    "simulation": "latest"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "EPPM",
+    "fear appeals",
+    "health communication",
+    "systems dynamics",
+    "simulation",
+    "Witte",
+    "parallel process model"
+  ],
+  "license": "MIT"
+}

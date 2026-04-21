@@ -2,6 +2,8 @@
 
 A systems dynamics respecification and completion of Witte's (1992) Extended Parallel Process Model (EPPM) of fear appeals in health communication.
 
+Version 0.0.2 available on Insight Maker: https://insightmaker.com/insight/7pjXKK2Ctq6obBQ9T9QJ6B
+
 ## Overview
 
 The EPPM has accumulated a mixed and contradictory empirical record despite its theoretical elegance and widespread application in public health. This model argues that the apparent failures are methodological rather than theoretical — specifically, that the experimental literature systematically confused message characteristics with perceived characteristics, testing what messages were designed to convey rather than what audiences actually perceived.
